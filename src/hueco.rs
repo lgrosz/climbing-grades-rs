@@ -1,3 +1,6 @@
+use std::str::FromStr;
+
+#[derive(Debug, PartialEq)]
 pub struct Grade {
     value: u8,
 }
@@ -12,6 +15,21 @@ impl Grade {
     }
 }
 
+#[derive(Debug, PartialEq, Eq)]
+pub struct ParseGradeError;
+
+impl FromStr for Grade {
+    type Err = ParseGradeError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let v = s.strip_prefix('V')
+            .ok_or(ParseGradeError)?;
+
+        let value = v.parse::<u8>().map_err(|_| ParseGradeError)?;
+        Ok(Grade { value })
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -19,6 +37,14 @@ mod tests {
     #[test]
     fn new() {
         assert_eq!(Grade::new(1).value(), 1);
+    }
+
+    #[test]
+    fn from_str() {
+        assert_eq!(Grade::from_str(""), Err(ParseGradeError));
+        assert_eq!(Grade::from_str("V"), Err(ParseGradeError));
+        assert_eq!(Grade::from_str("1"), Err(ParseGradeError));
+        assert_eq!(Grade::from_str("V1"), Ok(Grade { value: 1 }));
     }
 }
 
