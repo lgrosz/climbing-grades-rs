@@ -1,5 +1,15 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+pub struct Grade {
+    value: u8,
+}
+
+impl Grade {
+    pub fn new(value: u8) -> Grade {
+        Grade { value }
+    }
+
+    pub fn value(& self) -> u8 {
+        self.value
+    }
 }
 
 #[cfg(test)]
@@ -7,8 +17,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    fn new() {
+        assert_eq!(Grade::new(1).value(), 1);
     }
 }
