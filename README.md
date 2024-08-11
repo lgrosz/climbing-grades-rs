@@ -1,5 +1,5 @@
 # Climbing Grade
 
-[![Coverage](https://shields.io/endpoint?url=https://lgrosz.github.io/climbing-grades-rs/coverage/coverage.json)](https://lgrosz.github.io/climbing-grades-rs/coverage)
+[![codecov](https://codecov.io/github/lgrosz/climbing-grades-rs/graph/badge.svg?token=FJTXYWRIPS)](https://codecov.io/github/lgrosz/climbing-grades-rs)
 
 A Rust library for rock climbing grades.
