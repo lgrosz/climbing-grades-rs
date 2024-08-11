@@ -60,13 +60,18 @@ jobs:
           --branch \
           --ignore-not-existing \
           --keep-only 'src/*' \
-          --output-type html \
+          --output-type html,lcov \
           --output-path target/coverage
     - name: Publish coverage report
       uses: actions/upload-artifact@v4
       with:
         name: coverage-report
         path: target/coverage/html/
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v4.0.1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: target/coverage/lcov
   github-pages:
     if: github.ref == 'refs/heads/main'
     name: Deploy to Github Pages
