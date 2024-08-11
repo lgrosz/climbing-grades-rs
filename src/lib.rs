@@ -1,3 +1,3 @@
-pub mod hueco;
+pub mod vermin;
 pub mod yds;
 
