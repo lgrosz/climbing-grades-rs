@@ -1,7 +1,7 @@
 use std::str::FromStr;
 use std::fmt::Display;
 
-#[derive(Debug, PartialEq, Eq, Hash)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Grade {
     value: u8,
 }
