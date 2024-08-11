@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq, Hash)]
 pub struct Grade {
     value: u8,
 }
@@ -36,7 +36,14 @@ mod tests {
 
     #[test]
     fn new() {
-        assert_eq!(Grade::new(1).value(), 1);
+        let grade = Grade::new(1);
+        assert_eq!(grade.value, 1);
+    }
+
+    #[test]
+    fn value() {
+        let grade = Grade { value: 1 };
+        assert_eq!(grade.value(), 1);
     }
 
     #[test]
