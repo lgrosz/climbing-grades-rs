@@ -25,4 +25,39 @@ jobs:
       uses: dtolnay/rust-toolchain@stable
     - name: Run tests
       run: cargo test --all-features
-
+  codecov:
+    name: Generate code coverage
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Install Rust with LLVM tools
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        components: "llvm-tools-preview"
+    - name: Install grcov
+      uses: taiki-e/install-action@main
+      with:
+        tool: grcov
+    - name: Run tests for coverage
+      run: |
+        cargo test --all-features
+      env:
+        RUSTFLAGS: -Cinstrument-coverage
+        RUSTDOCFLAGS: -Cinstrument-coverage
+        LLVM_PROFILE_FILE: target/coverage/climbing-grades-%p-%m.profraw
+    - name: Produce coverage info
+      run: |
+        grcov target/coverage \
+          --source-dir . \
+          --binary-path ./target/debug/ \
+          --branch \
+          --ignore-not-existing \
+          --keep-only 'src/*' \
+          --output-type html \
+          --output-path target/coverage
+    - name: Publish coverage report
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: target/coverage/html/
