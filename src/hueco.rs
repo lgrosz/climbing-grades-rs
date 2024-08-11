@@ -1,4 +1,5 @@
 use std::str::FromStr;
+use std::fmt::Display;
 
 #[derive(Debug, PartialEq, Eq, Hash)]
 pub struct Grade {
@@ -30,6 +31,13 @@ impl FromStr for Grade {
     }
 }
 
+impl Display for Grade {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let value = self.value;
+        write!(f, "V{value}")
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -52,6 +60,11 @@ mod tests {
         assert_eq!(Grade::from_str("V"), Err(ParseGradeError));
         assert_eq!(Grade::from_str("1"), Err(ParseGradeError));
         assert_eq!(Grade::from_str("V1"), Ok(Grade { value: 1 }));
+    }
+
+    #[test]
+    fn fmt() {
+        assert_eq!(format!("{}", Grade { value: 1 }), "V1");
     }
 }
 
