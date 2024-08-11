@@ -25,7 +25,7 @@ jobs:
       uses: dtolnay/rust-toolchain@stable
     - name: Run tests
       run: cargo test --all-features
-  codecov:
+  coverage:
     name: Generate code coverage
     runs-on: ubuntu-latest
     steps:
@@ -64,7 +64,7 @@ jobs:
   github-pages:
     if: github.ref == 'refs/heads/main'
     name: Deploy to Github Pages
-    needs: codecov
+    needs: coverage
     runs-on: ubuntu-latest
     permissions:
       pages: write
